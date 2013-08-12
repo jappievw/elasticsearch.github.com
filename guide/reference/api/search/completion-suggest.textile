@@ -112,3 +112,30 @@ curl -X POST 'localhost:9200/music/_suggest?pretty' -d '{
 
 As you can see, the payload is included in the response, if configured appropriately. If you configured a weight for a suggestion, this weight is used as @score@. Also the @text@ field uses the @output@ of your indexed suggestion, if configured, otherwise the matched part of the @input@ field.
 
+h3. Fuzzy queries
+
+p. With the release of elasticsearch @0.90.4@ the completion suggester also supports fuzzy queries - this means, you can actually have a typo in your search and still get results back.
+
+<pre class="prettyprint lang-js">
+curl -X POST 'localhost:9200/music/_suggest?pretty' -d '{
+    "song-suggest" : {
+        "text" : "n",
+        "completion" : {
+            "field" : "suggest",
+            "fuzzy" : {
+                "edit_distance" : 2
+            }
+        }
+    }
+}'
+</pre>
+
+p. The fuzzy query can take specific fuzzy parameters. The following parameters are supported:
+
+* @edit_distance@: Maximum edit distance, defaults to @1@
+* @transpositions@: Sets if transpositions should be counted as one or two changes, defaults to @true@
+* @min_length@: Minimum length of the input before fuzzy suggestions are returned, defaults @3@
+* @prefix_length@: Minimum length of the input, which is not checked for fuzzy alternatives, defaults to @1@
+
+p. Note: If you want to stick with the default values, but still use fuzzy, you can either use @fuzzy: {}@ or @fuzzy: true@.
+
