@@ -38,6 +38,10 @@ h2. Pretty Results
 
 p. When appending @?pretty=true@ to any request made, the JSON returned will be pretty formatted (use it for debugging only!). Another option is to set @format=yaml@ which will cause the result to be returned in the (sometimes) more readable yaml format.
 
+h2. Human readable output
+
+p. Statistics are returned in a format suitable for humans (eg @"exists_time": "1h"@ or @"size": "1kb"@) and for computers (eg @"exists_time_in_millis": 3600000`@ or @"size_in_bytes": 1024@).  The human readable values can be turned off by adding @?human=false@ to the query string. This makes sense when the stats results are being consumed by a monitoring tool, rather than intended for humans.  In 0.90, @human@ defaults to @true@, but will be changed to default to @false@ from version 1.0 onwards.
+
 h2. Parameters
 
 p. Rest parameters (when using HTTP, map to HTTP URL parameters) follow the convention of using underscore casing.
